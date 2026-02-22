@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import API_BASE from '../config'
 
 export default function RegisterPage() {
     const navigate = useNavigate()
@@ -23,7 +24,7 @@ export default function RegisterPage() {
         setSuccess('')
 
         try {
-            const res = await axios.post('http://localhost:5000/api/register', form)
+            const res = await axios.post(`${API_BASE}/api/register`, form)
             setSuccess(res.data.message)
             setTimeout(() => navigate('/login'), 1800)
         } catch (err) {

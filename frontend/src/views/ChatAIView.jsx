@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import axios from 'axios'
+import API_BASE from '../config'
 
 // ─── BANKING AI WELCOME SUGGESTIONS ───────────────────────────────────────────
 const SUGGESTIONS = [
@@ -102,7 +103,7 @@ export default function ChatAIView({ profile }) {
 
         try {
             const res = await axios.post(
-                'http://localhost:5000/api/chat',
+                `${API_BASE}/api/chat`,
                 {
                     messages: history.map(m => ({ role: m.role, content: m.content })),
                     username: profile?.username || 'User',

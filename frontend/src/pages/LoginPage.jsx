@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import API_BASE from '../config'
 
 export default function LoginPage() {
     const navigate = useNavigate()
@@ -19,7 +20,7 @@ export default function LoginPage() {
         setError('')
 
         try {
-            await axios.post('http://localhost:5000/api/login', form, {
+            await axios.post(`${API_BASE}/api/login`, form, {
                 withCredentials: true
             })
             navigate('/userdashboard')

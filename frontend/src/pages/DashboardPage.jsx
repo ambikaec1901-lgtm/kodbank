@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import '../dashboard.css'
+import API_BASE from '../config'
 
 // ─── VIEWS ─────────────────────────────────────────────────────────────────────
 import AccountsView from '../views/AccountsView'
@@ -198,7 +199,7 @@ function DashboardHome({ profile, onGoTransfer }) {
         setLoadingBal(true)
         setBalanceErr('')
         try {
-            const res = await axios.get('http://localhost:5000/api/balance', { withCredentials: true })
+            const res = await axios.get(`${API_BASE}/api/balance`, { withCredentials: true })
             setBalance(res.data.balance)
             setFetched(true)
         } catch (err) {
@@ -338,13 +339,13 @@ export default function DashboardPage() {
     const greeting = getGreeting()
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/profile', { withCredentials: true })
+        axios.get(`${API_BASE}/api/profile`, { withCredentials: true })
             .then(res => setProfile(res.data))
             .catch(() => navigate('/login'))
     }, [navigate])
 
     const handleLogout = async () => {
-        await axios.post('http://localhost:5000/api/logout', {}, { withCredentials: true })
+        await axios.post(`${API_BASE}/api/logout`, {}, { withCredentials: true })
         navigate('/login')
     }
 
