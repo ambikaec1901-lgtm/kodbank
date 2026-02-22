@@ -13,8 +13,20 @@ const JWT_SECRET = 'kodbank_super_secret_key_2026';
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+const ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'https://kodbank-two.vercel.app',
+    /\.vercel\.app$/,
+];
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true); // allow server-to-server
+        const allowed = ALLOWED_ORIGINS.some(o =>
+            typeof o === 'string' ? o === origin : o.test(origin)
+        );
+        callback(allowed ? null : new Error('CORS blocked'), allowed);
+    },
     credentials: true
 }));
 
@@ -466,9 +478,14 @@ Always respond in a helpful, clear, structured manner.`
 });
 
 
-app.listen(PORT, () => {
-    console.log(`\n🏦 KodBank Server running at http://localhost:${PORT}`);
-    console.log(`   Database: SQLite (bank.db)`);
-    console.log(`   JWT Auth: Enabled`);
-    console.log(`   CORS:     http://localhost:5173\n`);
-});
+// ─── Export for Vercel serverless OR start locally ────────────────────────────
+export { app };
+
+if (process.env.NODE_ENV !== 'production' || process.env.LOCAL_SERVER) {
+    app.listen(PORT, () => {
+        console.log(`\n🏦 KodBank Server running at http://localhost:${PORT}`);
+        console.log(`   Database: SQLite (bank.db)`);
+        console.log(`   JWT Auth: Enabled`);
+        console.log(`   CORS:     http://localhost:5173\n`);
+    });
+}

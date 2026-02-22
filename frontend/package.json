@@ -6,10 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "vercel-build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "node server/index.js",
-    "start": "concurrently --names \"SERVER,VITE\" --prefix-colors \"blue,green\" \"node server/index.js\" \"vite\"",
+    "server": "LOCAL_SERVER=true node server/index.js",
+    "start": "concurrently --names \"SERVER,VITE\" --prefix-colors \"blue,green\" \"LOCAL_SERVER=true node server/index.js\" \"vite\"",
     "setup-ai": "node scripts/setup-hf-space.js"
   },
   "dependencies": {
