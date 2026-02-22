@@ -1,0 +1,10 @@
+{
+    "name": "kodbank-root",
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "cd frontend && npm run dev",
+        "server": "cd frontend && node server/index.js",
+        "start": "cd frontend && npm start",
+        "setup-ai": "cd frontend && npm run setup-ai"
+    }
+}
